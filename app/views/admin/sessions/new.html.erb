@@ -1,0 +1,9 @@
+<div class="max-w-sm mx-auto mt-24 px-4">
+  <div class="bg-surface border border-border rounded-xl p-8">
+    <h1 class="text-xl mb-6 text-center">&#128202; Admin Login</h1>
+    <%= form_with url: admin_login_path, local: true do |f| %>
+      <input type="password" name="password" placeholder="Enter admin password" autofocus class="w-full bg-white border border-border text-gray-900 px-3 py-2.5 rounded-md text-sm mb-4">
+      <button type="submit" class="btn btn-primary w-full justify-center">Log In</button>
+    <% end %>
+  </div>
+</div>

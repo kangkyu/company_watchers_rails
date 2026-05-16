@@ -1,0 +1,74 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl">&#128202; Admin Panel</h1>
+    <div class="flex gap-2">
+      <%= link_to "Back to site", root_path, class: "btn" %>
+      <%= button_to "Logout", admin_logout_path, method: :delete, class: "btn" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 mb-8">
+    <div class="bg-surface border border-border rounded-lg p-4 text-center">
+      <div class="text-2xl font-bold"><%= @company_count %></div>
+      <div class="text-xs text-muted">Companies</div>
+    </div>
+    <div class="bg-surface border border-border rounded-lg p-4 text-center">
+      <div class="text-2xl font-bold"><%= @news_count %></div>
+      <div class="text-xs text-muted">News items</div>
+    </div>
+    <div class="bg-surface border border-border rounded-lg p-4 text-center">
+      <div class="text-2xl font-bold text-green-700">Online</div>
+      <div class="text-xs text-muted">System status</div>
+    </div>
+  </div>
+
+  <div class="bg-surface border border-border rounded-lg p-5 mb-6">
+    <h2 class="text-lg mb-4">Sync news</h2>
+    <p class="text-sm text-muted mb-4">Refresh profile + latest news for all picked companies via FMP.</p>
+    <%= button_to "Sync all companies", admin_sync_all_path, method: :post, class: "btn btn-primary" %>
+  </div>
+
+  <div class="bg-surface border border-border rounded-lg p-5 mb-6">
+    <h2 class="text-lg mb-4">Add company by symbol</h2>
+    <%= form_with url: companies_path, method: :post, local: true do %>
+      <div class="flex gap-3">
+        <div class="flex-1">
+          <label class="block text-xs text-muted mb-1">Ticker symbol</label>
+          <input type="text" name="company[symbol]" placeholder="e.g. AAPL, MSFT, NVDA" required class="w-full bg-white border border-border text-gray-900 px-2 py-2 rounded-md text-sm">
+        </div>
+        <div class="self-end">
+          <button type="submit" class="btn btn-primary">Add &amp; Pick</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="bg-surface border border-border rounded-lg p-5 mb-6">
+    <h2 class="text-lg mb-4">Search and import</h2>
+    <%= form_with url: admin_search_and_import_path, method: :post, local: true do %>
+      <div class="flex gap-3">
+        <div class="flex-1">
+          <label class="block text-xs text-muted mb-1">Company name or partial symbol</label>
+          <input type="text" name="keyword" placeholder="e.g. Apple, Nvidia, ASML" required class="w-full bg-white border border-border text-gray-900 px-2 py-2 rounded-md text-sm">
+        </div>
+        <div class="self-end">
+          <button type="submit" class="btn btn-primary">Search &amp; import</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="bg-surface border border-border rounded-lg p-5 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg">Picked companies</h2>
+    </div>
+
+    <% if @companies.any? %>
+      <ul class="list-none">
+        <%= render partial: "companies/company", collection: @companies %>
+      </ul>
+    <% else %>
+      <p class="text-muted text-sm">No picked companies yet. Add one above.</p>
+    <% end %>
+  </div>
+</div>
